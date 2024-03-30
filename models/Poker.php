@@ -150,4 +150,20 @@ class Poker
         printf("Error $stmt\n, $stmt->error");
         return false;
     }
+
+    public function delete()
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE ID = :ID';
+        $stmt = $this->conn->prepare($query);
+
+        $this->ID = htmlspecialchars(strip_tags($this->ID));
+
+        $stmt->bindParam(":ID", $this->ID);
+
+        if ($stmt->execute()) {
+            return true;
+        };
+        printf("Error $stmt\n, $stmt->error");
+        return false;
+    }
 }
