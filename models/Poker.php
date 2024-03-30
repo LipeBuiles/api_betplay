@@ -59,4 +59,48 @@ class Poker
         $this->Cumulative_bb100 = $row['Cumulative_bb100'];
         $this->Cumulative_Scale = $row['Cumulative_Scale'];
     }
+
+    public function create()
+    {
+        $query = 'INSERT INTO ' . $this->table . ' (Date, Initial_Value, Final_Value, Increment, Cumulative_Increase, Initial_Time, Final_Time, Time_In_Hours, Numbers_Hands, Cumulative_Numbers_Hands, VBB, bb100, Scale, Cumulative_bb100, Cumulative_Scale) VALUES (:Date, :Initial_Value, :Final_Value, :Increment, :Cumulative_Increase, :Initial_Time, :Final_Time, :Time_In_Hours, :Numbers_Hands, :Cumulative_Numbers_Hands, :VBB, :bb100, :Scale, :Cumulative_bb100,:Cumulative_Scale)';
+        $stmt = $this->conn->prepare($query);
+
+        $this->Date = htmlspecialchars(strip_tags($this->Date));
+        $this->Initial_Value = htmlspecialchars(strip_tags($this->Initial_Value));
+        $this->Final_Value = htmlspecialchars(strip_tags($this->Final_Value));
+        $this->Increment = htmlspecialchars(strip_tags($this->Increment));
+        $this->Cumulative_Increase = htmlspecialchars(strip_tags($this->Cumulative_Increase));
+        $this->Initial_Time = htmlspecialchars(strip_tags($this->Initial_Time));
+        $this->Final_Time = htmlspecialchars(strip_tags($this->Final_Time));
+        $this->Time_In_Hours = htmlspecialchars(strip_tags($this->Time_In_Hours));
+        $this->Numbers_Hands = htmlspecialchars(strip_tags($this->Numbers_Hands));
+        $this->Cumulative_Numbers_Hands = htmlspecialchars(strip_tags($this->Cumulative_Numbers_Hands));
+        $this->VBB = htmlspecialchars(strip_tags($this->VBB));
+        $this->bb100 = htmlspecialchars(strip_tags($this->bb100));
+        $this->Scale = htmlspecialchars(strip_tags($this->Scale));
+        $this->Cumulative_bb100 = htmlspecialchars(strip_tags($this->Cumulative_bb100));
+        $this->Cumulative_Scale = htmlspecialchars(strip_tags($this->Cumulative_Scale));
+
+        $stmt->bindParam(":Date", $this->Date);
+        $stmt->bindParam(":Initial_Value", $this->Initial_Value);
+        $stmt->bindParam(":Final_Value", $this->Final_Value);
+        $stmt->bindParam(":Increment", $this->Increment);
+        $stmt->bindParam(":Cumulative_Increase", $this->Cumulative_Increase);
+        $stmt->bindParam(":Initial_Time", $this->Initial_Time);
+        $stmt->bindParam(":Final_Time", $this->Final_Time);
+        $stmt->bindParam(":Time_In_Hours", $this->Time_In_Hours);
+        $stmt->bindParam(":Numbers_Hands", $this->Numbers_Hands);
+        $stmt->bindParam(":Cumulative_Numbers_Hands", $this->Cumulative_Numbers_Hands);
+        $stmt->bindParam(":VBB", $this->VBB);
+        $stmt->bindParam(":bb100", $this->bb100);
+        $stmt->bindParam(":Scale", $this->Scale);
+        $stmt->bindParam(":Cumulative_bb100", $this->Cumulative_bb100);
+        $stmt->bindParam(":Cumulative_Scale", $this->Cumulative_Scale);
+
+        if ($stmt->execute()) {
+            return true;
+        };
+        printf("Error $stmt\n, $stmt->error");
+        return false;
+    }
 }
